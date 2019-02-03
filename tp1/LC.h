@@ -1,0 +1,22 @@
+#ifndef _LC_H_
+#define _LC_H_
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Message
+{
+    int                 dateDebut;
+    int                 dateFin;
+    char                message[100];
+    struct Message    * suivant;
+};
+typedef struct Message Message_t;
+
+Message_t*  creerElement    (int, int, const char*);
+void        ajouterElement  (Message_t**, Message_t*);
+void        afficherListe   (Message_t*);
+
+
+#endif // !_LC_H_
