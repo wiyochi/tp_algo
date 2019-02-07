@@ -15,7 +15,7 @@ Message_t* creerElement(int ddebut, int dfin, const char* msg)
     return element;
 }
 
-void ajouterElement(Message_t** liste, Message_t* element)
+Message_t** rechercherPrecedent(Message_t** liste, Message_t* element)
 {
     Message_t* cour = *liste;
     Message_t** prec = liste;
@@ -25,8 +25,15 @@ void ajouterElement(Message_t** liste, Message_t* element)
         prec = &(cour->suivant);
         cour = cour->suivant;
     }
-    (*prec) = element;
-    element->suivant = cour;
+    return prec;
+}
+
+void ajouterElement(Message_t** liste, Message_t* element)
+{
+    Message_t** prec = rechercherPrecedent(liste, element);
+
+    element->suivant = *prec;
+    *prec = element;
 }
 
 void afficherListe(Message_t* liste)

@@ -18,29 +18,6 @@ int main(int argc, char* argv[])
         afficherListe(maListe);
         printf("END\n");
     }
-    
-
-    /*
-    Message_t* maListe = NULL;
-    Message_t* e;
-
-    afficherListe(maListe);
-
-    e = creerElement(20170214, 20170215, "bonjour");
-    if(e != NULL)
-        ajouterElement(&maListe, e);
-    afficherListe(maListe);
-
-    printf("###\n");
-
-    e = creerElement(20170101, 20170215, "bonmatin");
-    ajouterElement(&maListe, e);
-    e = creerElement(20170224, 20170227, "bonsoir");
-    ajouterElement(&maListe, e);
-    e = creerElement(20180214, 20170215, "yolo");
-    ajouterElement(&maListe, e);
-    afficherListe(maListe);
-    */
 
     return 0;
 }
@@ -58,7 +35,6 @@ int lireFichier(Message_t** liste, const char* filename)
     {
         while(fgets(buffer, 116, file))
         {
-            printf("buffer: %s\n", buffer);
             modifFormat(buffer, &ddebut, &dfin, msg);
             element = creerElement(ddebut, dfin, msg);
             ajouterElement(liste, element);
