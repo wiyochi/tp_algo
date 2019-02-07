@@ -2,7 +2,7 @@
 #include "LC.h"
 
 int lireFichier(Message_t**, const char*);
-void modifFormat(const char*, int*, int*, char*);
+void formateChaine(char*);
 
 int main(int argc, char* argv[])
 {
@@ -14,9 +14,10 @@ int main(int argc, char* argv[])
     }
     else
     {
-        lireFichier(&maListe, argv[1]);
-        afficherListe(maListe);
-        printf("END\n");
+        if(lireFichier(&maListe, argv[1]))
+            afficherListe(maListe);
+        else
+            printf("Erreur sur le fichier\n");
     }
 
     return 0;
@@ -24,21 +25,22 @@ int main(int argc, char* argv[])
 
 int lireFichier(Message_t** liste, const char* filename)
 {
-    int erreur = 1;
-    FILE* file = fopen(filename, "r");
-    int ddebut, dfin;
-    char msg[100];
-    char buffer[116];
-    Message_t* element;
+    int         erreur = 1;
+    FILE*       file = fopen(filename, "r");
+    int         ddebut, dfin;
+    char        msg[100];
+    Message_t*  element;
 
     if(file != NULL)
     {
-        while(fgets(buffer, 116, file))
+        while(!feof(file))
         {
-            modifFormat(buffer, &ddebut, &dfin, msg);
-            element = creerElement(ddebut, dfin, msg);
-            ajouterElement(liste, element);
-            memset(buffer, 0, 116);
+            fscanf(file, "%d %d", &ddebut, &dfin);
+            fgets(msg, 100, file);
+            formateChaine(msg);
+
+            if((element = creerElement(ddebut, dfin, msg)) != NULL)
+                ajouterElement(liste, element);
         }
         fclose(file);
     }
@@ -50,25 +52,11 @@ int lireFichier(Message_t** liste, const char* filename)
     return erreur;
 }
 
-void modifFormat(const char* buffer, int* ddebut, int* dfin, char* msg)
+void formateChaine(char* chaine)
 {
-    char integer[8];
-    int i;
-
-    for(i = 0; i < 8; i++)
-    {
-        integer[i] = buffer[i];
-    }
-    *ddebut = atoi(integer);
-    for(i = 9; i < 17; i++)
-    {
-        integer[i - 9] = buffer[i];
-    }
-    *dfin = atoi(integer);
-
-    while(buffer[i] != '\n' && buffer[i] != '\0')
-    {
-        msg[i - 17] = buffer[i];
+    int i = 0;
+    while(chaine[i] != '\0' && chaine[i] != '\n')
         i++;
-    }
+
+    chaine[i] = '\0';
 }

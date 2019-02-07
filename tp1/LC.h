@@ -9,14 +9,16 @@ struct Message
 {
     int                 dateDebut;
     int                 dateFin;
-    char                message[100];
+    char              * message;
     struct Message    * suivant;
 };
 typedef struct Message Message_t;
 
-Message_t*  creerElement    (int, int, const char*);
-void        ajouterElement  (Message_t**, Message_t*);
-void        afficherListe   (Message_t*);
+Message_t*  creerElement        (int, int, const char*);
+Message_t** rechercherPrecedent (Message_t**, Message_t*);
+void        ajouterElement      (Message_t**, Message_t*);
+void        adjonctionCellule   (Message_t**, Message_t*);
+void        afficherListe       (Message_t*);
 
 
 #endif // !_LC_H_
