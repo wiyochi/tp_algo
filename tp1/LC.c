@@ -97,12 +97,17 @@ void afficherListe(Message_t* liste)
     while(cour != NULL)
     {
         printf("Message %d:\n", cpt);
-        printf("\tpt: %p\n", cour);
-        printf("\tDate debut: %d\n", cour->dateDebut);
-        printf("\tDate fin: %d\n", cour->dateFin);
-        printf("\tMessage: %s\n", cour->message);
-        printf("\tSuivant: %p\n", cour->suivant);
+        afficherElement(cour);
         cour = cour->suivant;
         cpt++;
     }
+}
+
+void afficherElement(Message_t* element)
+{
+    printf("\tpt: %p\n", element);
+    printf("\tDate debut: %d\n", element->dateDebut);
+    printf("\tDate fin: %d\n", element->dateFin);
+    printf("\tMessage: %s\n", element->message);
+    printf("\tSuivant: %p\n", element->suivant);
 }

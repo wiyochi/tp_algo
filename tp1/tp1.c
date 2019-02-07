@@ -1,21 +1,33 @@
 #include <stdio.h>
+#include <time.h>
 #include "LC.h"
 
 int lireFichier(Message_t**, const char*);
+int ecrireFichier(Message_t*, const char*);
+void afficherNonExpire(Message_t*);
+int dateAj();
 void formateChaine(char*);
+
 
 int main(int argc, char* argv[])
 {
     Message_t* maListe = NULL;
 
-    if(argc < 2)
+    if(argc < 3)
     {
         printf("pas de fichier\n");
     }
     else
     {
+        printf("Lecture du fichier\n");
         if(lireFichier(&maListe, argv[1]))
             afficherListe(maListe);
+        else
+            printf("Erreur sur le fichier\n");
+
+        printf("\n\nEcriture du fichier\n");
+        if(ecrireFichier(maListe, argv[2]))
+            afficherNonExpire(maListe);
         else
             printf("Erreur sur le fichier\n");
     }
@@ -50,6 +62,58 @@ int lireFichier(Message_t** liste, const char* filename)
     }
 
     return erreur;
+}
+
+int ecrireFichier(Message_t* liste, const char* filename)
+{
+    int         erreur = 1;
+    FILE*       file = fopen(filename, "w");
+    Message_t*  cour = liste;
+
+    if(file != NULL)
+    {
+        while(cour != NULL)
+        {
+            fprintf(file, "%d %d %s\n", cour->dateDebut, cour->dateFin, cour->message);
+            cour = cour->suivant;
+        }
+        fclose(file);
+    }
+    else
+    {
+        erreur = 0;
+    }
+
+    return erreur;
+}
+
+void afficherNonExpire(Message_t* liste)
+{
+    Message_t* cour = liste;
+    int today = dateAj();
+    printf("aj = %d\n", today);
+
+    while(cour != NULL)
+    {
+        if(cour->dateFin > today)
+        {
+            afficherElement(cour);
+        }
+        cour = cour->suivant;
+    }
+}
+
+int dateAj()
+{
+    time_t t;
+    struct tm * date;
+    char buffer[10];
+
+    time(&t);
+    date = localtime(&t);
+    strftime(buffer, sizeof(buffer), "%Y%m%d", date);
+
+    return atoi(buffer);
 }
 
 void formateChaine(char* chaine)
