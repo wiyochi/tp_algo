@@ -77,10 +77,17 @@ void ajouterElement(Message_t** liste, Message_t* element)
 /*    liste chaînée                                                        */
 /*                                                                         */
 /*-------------------------------------------------------------------------*/
-void adjonctionCellule (Message_t** prec, Message_t* element)
+void adjonctionCellule(Message_t** prec, Message_t* element)
 {
     element->suivant = *prec;
     *prec = element;
+}
+
+void suppressionCellule(Message_t** prec)
+{
+    Message_t* el = *prec;
+    *prec = el->suivant;
+    free(el);
 }
 
 /*-------------------------------------------------------------------------*/
@@ -103,6 +110,12 @@ void afficherListe(Message_t* liste)
     }
 }
 
+/*-------------------------------------------------------------------------*/
+/* afficherElement   Affiche un élément d'une liste de message             */
+/*                                                                         */
+/* Entrées: element, pointeur sur un structure message                     */
+/*                                                                         */
+/*-------------------------------------------------------------------------*/
 void afficherElement(Message_t* element)
 {
     printf("\tpt: %p\n", element);

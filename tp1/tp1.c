@@ -2,11 +2,13 @@
 #include <time.h>
 #include "LC.h"
 
-int lireFichier(Message_t**, const char*);
-int ecrireFichier(Message_t*, const char*);
-void afficherNonExpire(Message_t*);
-int dateAj();
-void formateChaine(char*);
+int     lireFichier         (Message_t**, const char*);
+int     ecrireFichier       (Message_t*, const char*);
+void    afficherNonExpire   (Message_t*);
+void    supprimerExpire     (Message_t**);
+void    modifDateDebut      (Message_t*, int, int);
+int     dateAj              ();
+void    formateChaine       (char*);
 
 
 int main(int argc, char* argv[])
@@ -24,12 +26,21 @@ int main(int argc, char* argv[])
             afficherListe(maListe);
         else
             printf("Erreur sur le fichier\n");
+            
+        printf("\n\nAffichage des messages non expires\n");
+        afficherNonExpire(maListe);
+        
+        printf("\n\nSupression des messages expires...\n");
+        supprimerExpire(&maListe);
+        afficherListe(maListe);
 
         printf("\n\nEcriture du fichier\n");
-        if(ecrireFichier(maListe, argv[2]))
-            afficherNonExpire(maListe);
-        else
+        if(!ecrireFichier(maListe, argv[2]))
             printf("Erreur sur le fichier\n");
+
+        printf("Modif de la date 20190120\n");
+        modifDateDebut(maListe, 20190120, 20190204);
+        afficherListe(maListe);
     }
 
     return 0;
@@ -95,9 +106,44 @@ void afficherNonExpire(Message_t* liste)
 
     while(cour != NULL)
     {
-        if(cour->dateFin > today)
+        if(cour->dateFin >= today)
         {
             afficherElement(cour);
+        }
+        cour = cour->suivant;
+    }
+}
+
+void supprimerExpire(Message_t** liste)
+{
+    Message_t* cour = *liste;
+    Message_t** prec = liste;
+    int aj = dateAj();
+
+    while(cour != NULL)
+    {
+        if(cour->dateFin < aj)
+        {
+            suppressionCellule(prec);
+            cour = (*prec);
+        }
+        else
+        {
+            prec = &(cour->suivant);
+            cour = cour->suivant;
+        }
+    }
+}
+
+void modifDateDebut(Message_t* liste, int dateAModif, int nDate)
+{
+    Message_t* cour = liste;
+
+    while(cour != NULL)
+    {
+        if(cour->dateDebut == dateAModif)
+        {
+            cour->dateDebut = nDate;
         }
         cour = cour->suivant;
     }
