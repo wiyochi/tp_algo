@@ -7,6 +7,7 @@ int     ecrireFichier       (Message_t*, const char*);
 void    afficherNonExpire   (Message_t*);
 void    supprimerExpire     (Message_t**);
 void    modifDateDebut      (Message_t*, int, int);
+void    afficherMotif       (Message_t*, const char*);
 int     dateAj              ();
 void    formateChaine       (char*);
 
@@ -41,6 +42,9 @@ int main(int argc, char* argv[])
         printf("Modif de la date 20190120\n");
         modifDateDebut(maListe, 20190120, 20190204);
         afficherListe(maListe);
+
+        printf("Affichage des cellules avec un message avec le motif: o\n");
+        afficherMotif(maListe, "o");
     }
 
     return 0;
@@ -59,6 +63,7 @@ int lireFichier(Message_t** liste, const char* filename)
         while(!feof(file))
         {
             fscanf(file, "%d %d", &ddebut, &dfin);
+            fgetc(file);
             fgets(msg, 100, file);
             formateChaine(msg);
 
@@ -100,15 +105,15 @@ int ecrireFichier(Message_t* liste, const char* filename)
 
 void afficherNonExpire(Message_t* liste)
 {
-    Message_t* cour = liste;
-    int today = dateAj();
-    printf("aj = %d\n", today);
+    Message_t*  cour = liste;
+    int         today = dateAj();
 
     while(cour != NULL)
     {
         if(cour->dateFin >= today)
         {
             afficherElement(cour);
+            printf("\n");
         }
         cour = cour->suivant;
     }
@@ -116,9 +121,9 @@ void afficherNonExpire(Message_t* liste)
 
 void supprimerExpire(Message_t** liste)
 {
-    Message_t* cour = *liste;
+    Message_t*  cour = *liste;
     Message_t** prec = liste;
-    int aj = dateAj();
+    int         aj = dateAj();
 
     while(cour != NULL)
     {
@@ -149,11 +154,28 @@ void modifDateDebut(Message_t* liste, int dateAModif, int nDate)
     }
 }
 
+void afficherMotif(Message_t* liste, const char* motif)
+{
+    Message_t*  cour = liste;
+    char*       avecMotif;
+
+    while(cour != NULL)
+    {
+        avecMotif = NULL;
+        if((avecMotif = strstr(cour->message, motif)) != NULL)
+        {
+            afficherElement(cour);
+            printf("\n");
+        }
+        cour = cour->suivant;
+    }
+}
+
 int dateAj()
 {
-    time_t t;
+    time_t      t;
     struct tm * date;
-    char buffer[10];
+    char        buffer[10];
 
     time(&t);
     date = localtime(&t);
