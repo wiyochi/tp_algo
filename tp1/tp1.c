@@ -27,10 +27,10 @@ int main(int argc, char* argv[])
             afficherListe(maListe);
         else
             printf("Erreur sur le fichier\n");
-            
+
         printf("\n\nAffichage des messages non expires\n");
         afficherNonExpire(maListe);
-        
+
         printf("\n\nSupression des messages expires...\n");
         supprimerExpire(&maListe);
         afficherListe(maListe);
@@ -51,6 +51,21 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+
+
+/*-------------------------------------------------------------------------*/
+/* lireFichier  Lit un fichier texte et stocke sont contenu dans une liste */
+/*              de messages                                                */
+/*                                                                         */
+/* Entrées: liste, adresse du pointeur de liste                            */
+/*          filename, chaîne de caractère contenant le nom du fichier      */
+/*                                                                         */
+/*  Cette fonction lit le fichier filename ligne par ligne. En effet sur   */
+/*  une ligne du fichier se trouve dateDebut, dateFin et le message. Une   */
+/*  fois la ligne lue, on stocke son contenu dans une nouvel élément de    */
+/*  type Message_t grâce à la fonction creerElement et que l'on insère     */
+/*  dans la liste en respectant le tri grâce à la procédure ajouterElement */
+/*-------------------------------------------------------------------------*/
 
 int lireFichier(Message_t** liste, const char* filename)
 {
@@ -82,6 +97,17 @@ int lireFichier(Message_t** liste, const char* filename)
     return erreur;
 }
 
+
+/*-------------------------------------------------------------------------*/
+/*  ecrireFichier Ecrit le contenu d'une liste de messages dans un fichier */
+/*                                                                         */
+/*  Entrées: liste, pointeur de la liste                                   */
+/*           filename, chaîne de caractère contenant le nom du fichier     */
+/*                                                                         */
+/*  Cette fonction va stocker chaque éléments de la liste dans le fichier  */
+/*  à raison d'une ligne par éléments                                      */
+/*-------------------------------------------------------------------------*/
+
 int ecrireFichier(Message_t* liste, const char* filename)
 {
     int         erreur = 1;
@@ -105,6 +131,19 @@ int ecrireFichier(Message_t* liste, const char* filename)
     return erreur;
 }
 
+/*-------------------------------------------------------------------------*/
+/*  afficherNonExpire   Affiche tous les messages dont leur dateFin est    */
+/*                      supérieur ou égal à la date d'aujourd'hui          */
+/*                                                                         */
+/*  Entrées:    liste, pointeur de la liste                                */
+/*                                                                         */
+/*  Cette fonction va stocker dans une variable de type entier la date     */
+/*  d'aujourd'hui et va comparer cette dernière avec dateFin de chaque     */
+/*  éléments. Si dateFin est supérieur ou égal à la date d'aujourd'hui     */
+/*  alors on affiche le message de l'élément.                              */
+/*-------------------------------------------------------------------------*/
+
+
 void afficherNonExpire(Message_t* liste)
 {
     Message_t*  cour = liste;
@@ -120,6 +159,8 @@ void afficherNonExpire(Message_t* liste)
         cour = cour->suivant;
     }
 }
+
+
 
 void supprimerExpire(Message_t** liste)
 {
