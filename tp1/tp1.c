@@ -8,6 +8,7 @@ void    afficherNonExpire   (Message_t*);
 void    supprimerExpire     (Message_t**);
 void    modifDateDebut      (Message_t*, int, int);
 void    afficherMotif       (Message_t*, const char*);
+char*   rechercherMotif     (char*, const char*);
 int     dateAj              ();
 void    formateChaine       (char*);
 
@@ -164,13 +165,40 @@ void afficherMotif(Message_t* liste, const char* motif)
     while(cour != NULL)
     {
         avecMotif = NULL;
-        if((avecMotif = strstr(cour->message, motif)) != NULL)
+        if((avecMotif = rechercherMotif(cour->message, motif)) != NULL)
         {
             afficherElement(cour);
             printf("\n");
         }
         cour = cour->suivant;
     }
+}
+
+char* rechercherMotif(char* message, const char* motif)
+{
+    char* cour      = message;
+    const char* courMotif = motif;
+    char* debut;
+
+    while(*cour != '\0' && *courMotif != '\0')
+    {
+        debut = cour;
+        while(*courMotif != '\0' && *cour != '\0' && *courMotif == *cour)
+        {
+            courMotif++;
+            cour++;
+        }
+        if(*courMotif != '\0')
+        {
+            courMotif = motif;
+            cour++;
+        }
+    }
+
+    if(*courMotif != '\0')
+        debut = NULL;
+
+    return debut;
 }
 
 int dateAj()
