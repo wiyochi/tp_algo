@@ -4,7 +4,7 @@
 /* creerElement         Creer une cellule "Message"              */
 /*                                                               */
 /* Entrées: ddebut, dfin 2 entiers représentant des dates        */
-/*          msg, une chaîne de caractères                         */
+/*          msg, une chaîne de caractères                        */
 /*                                                               */
 /* Sortie:  adresse d'une nouvelle cellule allouée               */
 /*                                                               */
@@ -101,6 +101,15 @@ void suppressionCellule(Message_t** prec)
     free(el);
 }
 
+/*-------------------------------------------------------------------------*/
+/* libererListe   Supprime toutes les cellules de la liste                 */
+/*                                                                         */
+/* Entrées: liste, adresse du pointeur de liste                            */
+/*                                                                         */
+/*   Utilise suppressionCellule pour supprimer tous les éléments           */
+/*    de la liste                                                          */
+/*                                                                         */
+/*-------------------------------------------------------------------------*/
 void libererListe(Message_t** liste)
 {
     while(*liste != NULL)
