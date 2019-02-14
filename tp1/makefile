@@ -1,4 +1,4 @@
-OPT = -g -Wall -Wextra -Wunused-parameter
+OPT = -g -Wall -Wextra
 LOG = @echo "\#MAKE"
 
 tp1: tp1.c LC.o

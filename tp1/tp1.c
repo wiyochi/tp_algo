@@ -45,6 +45,8 @@ int main(int argc, char* argv[])
 
         printf("Affichage des cellules avec un message avec le motif: o\n");
         afficherMotif(maListe, "o");
+
+        libererListe(&maListe);
     }
 
     return 0;

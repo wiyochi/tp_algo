@@ -18,7 +18,7 @@ Message_t* creerElement(int ddebut, int dfin, const char* msg)
     {
         element->dateDebut = ddebut;
         element->dateFin = dfin;
-        element->message = (char*)malloc(sizeof(char) * strlen(msg));
+        element->message = (char*)malloc(sizeof(char) * (strlen(msg)+1));
         strcpy(element->message, msg);
         element->suivant = NULL;
     }
@@ -83,11 +83,30 @@ void adjonctionCellule(Message_t** prec, Message_t* element)
     *prec = element;
 }
 
+/*-------------------------------------------------------------------------*/
+/* suppressionCellule   Supprime une cellule de la liste                   */
+/*                                                                         */
+/* Entrées: prec, adresse du champs "suivant" de la cellule précedente     */
+/*                                                                         */
+/*   Edite les liens du précédent pour supprimer l'élément de la liste     */
+/*    libère la mémoire du message de l'élément supprimé                   */
+/*    libère la mémoire de l'élément supprimé de la liste                  */
+/*                                                                         */
+/*-------------------------------------------------------------------------*/
 void suppressionCellule(Message_t** prec)
 {
     Message_t* el = *prec;
     *prec = el->suivant;
+    free(el->message);
     free(el);
+}
+
+void libererListe(Message_t** liste)
+{
+    while(*liste != NULL)
+    {
+        suppressionCellule(liste);
+    }
 }
 
 /*-------------------------------------------------------------------------*/
