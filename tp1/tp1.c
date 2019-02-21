@@ -75,7 +75,6 @@ int lireFichier(Message_t** liste, const char* filename)
     int         ddebut, dfin;
     char        msg[100];
     Message_t*  element;
-    int r = 0;
 
     if(file != NULL)
     {
