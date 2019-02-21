@@ -75,18 +75,21 @@ int lireFichier(Message_t** liste, const char* filename)
     int         ddebut, dfin;
     char        msg[100];
     Message_t*  element;
+    int r = 0;
 
     if(file != NULL)
     {
         while(!feof(file))
         {
-            fscanf(file, "%d %d", &ddebut, &dfin);
-            fgetc(file);
-            fgets(msg, 100, file);
-            formateChaine(msg);
+            if(fscanf(file, "%d %d", &ddebut, &dfin) == 2) // On créer un nouvel élément seulement si les 2 valeurs (début et fin) sont lues
+            {
+                fgetc(file);
+                fgets(msg, 100, file);
+                formateChaine(msg);
 
-            if((element = creerElement(ddebut, dfin, msg)) != NULL)
-                ajouterElement(liste, element);
+                if((element = creerElement(ddebut, dfin, msg)) != NULL)
+                    ajouterElement(liste, element);
+            }
         }
         fclose(file);
     }
