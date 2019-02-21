@@ -20,8 +20,8 @@ void        ajouterElement      (Message_t**, Message_t*);
 void        adjonctionCellule   (Message_t**, Message_t*);
 void        suppressionCellule  (Message_t**);
 void        libererListe        (Message_t**);
-void        afficherListe       (Message_t*);
-void        afficherElement     (Message_t*);
+void        debugListe          (Message_t*);
+void        debugElement        (Message_t*);
 
 
 #endif // !_LC_H_

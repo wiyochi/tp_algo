@@ -1,8 +1,10 @@
 OPT = -g -Wall -Wextra
 LOG = @echo "\#MAKE"
 
-tp1: tp1.c LC.o
-	gcc -o tp1 tp1.c LC.o $(OPT)
+all: gestion-message
+
+gestion-message: tp1.c LC.o
+	gcc -o gestion-message tp1.c LC.o $(OPT)
 	$(LOG) "Executable généré"
 
 LC.o: LC.h LC.c
@@ -11,4 +13,4 @@ LC.o: LC.h LC.c
 
 clean:
 	rm *.o
-	rm tp1
+	rm gestion-message

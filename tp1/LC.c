@@ -1,14 +1,17 @@
 #include "LC.h"
 
-/*---------------------------------------------------------------*/
-/* creerElement         Creer une cellule "Message"              */
-/*                                                               */
-/* Entrées: ddebut, dfin 2 entiers représentant des dates        */
-/*          msg, une chaîne de caractères                        */
-/*                                                               */
-/* Sortie:  adresse d'une nouvelle cellule allouée               */
-/*                                                               */
-/*---------------------------------------------------------------*/
+/*---------------------------------------------------------------
+ * creerElement         Creer une cellule "Message"              
+ *                                                               
+ * Entrï¿½es: ddebut, dfin 2 entiers reprï¿½sentant des dates        
+ *          msg, une chaï¿½ne de caractï¿½res                        
+ *                                                               
+ * Sortie:  adresse d'une nouvelle cellule allouï¿½e  
+ *
+ * On alloue un espace mÃ©moire de la taille d'un Ã©lÃ©ment et on
+ *  initialise ses champs avec les donnÃ©es passÃ©es en argument   
+ *---------------------------------------------------------------
+ */
 Message_t* creerElement(int ddebut, int dfin, const char* msg)
 {
     Message_t * element;
@@ -25,18 +28,22 @@ Message_t* creerElement(int ddebut, int dfin, const char* msg)
     return element;
 }
 
-/*-------------------------------------------------------------------------*/
-/* rechercherPrecedent   Recherche le précedent d'une cellule donnée       */
-/*                                                                         */
-/* Entrées: liste, adresse du pointeur de liste                            */
-/*          element, adresse de la cellule dont il faut le précedent       */
-/*                                                                         */
-/* Sortie:  adresse de la case "suivant" de la cellule precedente          */
-/*                                                                         */
-/*   En l'occurence, le précedent pointe sur la cellule dont la date       */
-/*   de début est égale ou supérieur a la date de début de l'élement donné */
-/*                                                                         */
-/*-------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------
+ * rechercherPrecedent   Recherche le prï¿½cedent d'une cellule donnï¿½e       
+ *                                                                         
+ * Entrï¿½es: liste, adresse du pointeur de liste                            
+ *          element, adresse de la cellule dont il faut le prï¿½cedent       
+ *                                                                         
+ * Sortie:  adresse de la case "suivant" de la cellule precedente          
+ *                                                                         
+ *  En l'occurence, le prï¿½cedent pointe sur le champs "suivant" de la cellule
+ *   prÃ©cÃ©dente Ã  la cellule dont la date de dï¿½but est ï¿½gale ou supï¿½rieur 
+ *   a la date de dï¿½but de l'ï¿½lement donnï¿½ 
+ *
+ * Lexique: cour, pointeur sur l'Ã©lÃ©ment courant dont on teste la date de dÃ©but
+            prec, pointeur sur le champs suivant de l'Ã©lÃ©ment prÃ©cÃ©dent Ã  cour
+ *-------------------------------------------------------------------------
+ */
 Message_t** rechercherPrecedent(Message_t** liste, Message_t* element)
 {
     Message_t* cour = *liste;
@@ -50,49 +57,52 @@ Message_t** rechercherPrecedent(Message_t** liste, Message_t* element)
     return prec;
 }
 
-/*-------------------------------------------------------------------------*/
-/* ajouterElement   Ajoute une cellule à la liste de message               */
-/*                                                                         */
-/* Entrées: liste, adresse du pointeur de liste                            */
-/*          element, adresse de la cellule qu'il faut ajouter à la liste   */
-/*                                                                         */
-/*   Fonction là uniquement pour "simplifier" dans le programme principal  */
-/*   Recherche le precedent avec recherchePrecedent et appelle             */
-/*    adjonctionCellule avec celui-ci                                      */
-/*                                                                         */
-/*-------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------
+ * ajouterElement   Ajoute une cellule ï¿½ la liste de message               
+ *                                                                         
+ * Entrï¿½es: liste, adresse du pointeur de liste                            
+ *          element, adresse de la cellule qu'il faut ajouter ï¿½ la liste   
+ *                                                                         
+ *   Fonction lï¿½ uniquement pour "simplifier" dans le programme principal  
+ *   Recherche le precedent avec recherchePrecedent et appelle             
+ *    adjonctionCellule avec celui-ci                                      
+ *-------------------------------------------------------------------------
+ */
 void ajouterElement(Message_t** liste, Message_t* element)
 {
     Message_t** prec = rechercherPrecedent(liste, element);
     adjonctionCellule(prec, element);
 }
 
-/*-------------------------------------------------------------------------*/
-/* adjonctionCellule   Ajoute une cellule à la liste de message            */
-/*                                                                         */
-/* Entrées: prec, adresse du champs "suivant" de la cellule précedente     */
-/*          element, adresse de la cellule qu'il faut ajouter à la liste   */
-/*                                                                         */
-/*   Edite les liens du précédent et de l'élément pour l'ajouter dans la   */
-/*    liste chaînée                                                        */
-/*                                                                         */
-/*-------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------
+ * adjonctionCellule   Ajoute une cellule ï¿½ la liste de message            
+ *                                                                         
+ * Entrï¿½es: prec, adresse du champs "suivant" de la cellule prï¿½cedente     
+ *          element, adresse de la cellule qu'il faut ajouter ï¿½ la liste   
+ *                                                                         
+ *   Edite les liens du prï¿½cï¿½dent et de l'ï¿½lï¿½ment pour l'ajouter dans la   
+ *    liste chaï¿½nï¿½e                                                        
+ *-------------------------------------------------------------------------
+ */
 void adjonctionCellule(Message_t** prec, Message_t* element)
 {
     element->suivant = *prec;
     *prec = element;
 }
 
-/*-------------------------------------------------------------------------*/
-/* suppressionCellule   Supprime une cellule de la liste                   */
-/*                                                                         */
-/* Entrées: prec, adresse du champs "suivant" de la cellule précedente     */
-/*                                                                         */
-/*   Edite les liens du précédent pour supprimer l'élément de la liste     */
-/*    libère la mémoire du message de l'élément supprimé                   */
-/*    libère la mémoire de l'élément supprimé de la liste                  */
-/*                                                                         */
-/*-------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------
+ * suppressionCellule   Supprime une cellule de la liste                   
+ *                                                                         
+ * Entrï¿½es: prec, adresse du champs "suivant" de la cellule prï¿½cedente     
+ *                                                                         
+ *   Edite les liens du prï¿½cï¿½dent pour supprimer l'ï¿½lï¿½ment de la liste     
+ *    libï¿½re la mï¿½moire du message de l'ï¿½lï¿½ment supprimï¿½                   
+ *    libï¿½re la mï¿½moire de l'ï¿½lï¿½ment supprimï¿½ de la liste                  
+ *
+ * Lexique: el, pointeur sur l'Ã©lÃ©ment Ã  supprimer (permet de le libÃ©rer une
+ *               fois la modification des liens faites)
+ *-------------------------------------------------------------------------
+ */
 void suppressionCellule(Message_t** prec)
 {
     Message_t* el = *prec;
@@ -101,15 +111,16 @@ void suppressionCellule(Message_t** prec)
     free(el);
 }
 
-/*-------------------------------------------------------------------------*/
-/* libererListe   Supprime toutes les cellules de la liste                 */
-/*                                                                         */
-/* Entrées: liste, adresse du pointeur de liste                            */
-/*                                                                         */
-/*   Utilise suppressionCellule pour supprimer tous les éléments           */
-/*    de la liste                                                          */
-/*                                                                         */
-/*-------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------
+ * libererListe   Supprime toutes les cellules de la liste                 
+ *                                                                         
+ * Entrï¿½es: liste, adresse du pointeur de liste                            
+ *                                                                         
+ *   Utilise suppressionCellule pour supprimer tous les ï¿½lï¿½ments           
+ *    de la liste. On supprime l'Ã©lÃ©ment en tÃªte jusqu'Ã  ce que la liste
+ *    soit vide                                                          
+ *-------------------------------------------------------------------------
+ */
 void libererListe(Message_t** liste)
 {
     while(*liste != NULL)
@@ -118,13 +129,20 @@ void libererListe(Message_t** liste)
     }
 }
 
-/*-------------------------------------------------------------------------*/
-/* afficherListe   Affiche tout les éléments d'une liste de message        */
-/*                                                                         */
-/* Entrées: liste, pointeur de la liste                                    */
-/*                                                                         */
-/*-------------------------------------------------------------------------*/
-void afficherListe(Message_t* liste)
+/*-------------------------------------------------------------------------
+ * debugListe   Affiche tout les ï¿½lï¿½ments d'une liste de message           
+ *                                                                         
+ * Entrï¿½es: liste, pointeur de la liste                                    
+ *                                                                         
+ *   Affiche les Ã©lÃ©ments de la liste de maniÃ¨re complÃ¨te                  
+ *   (place dans la liste, adresse mÃ©moire, contenu et adresse du suivant)
+ *
+ * Lexique: cour, pointeur sur l'Ã©lÃ©ment Ã  afficher
+ *          cpt, compteur d'Ã©lÃ©ment pour afficher la place des Ã©lÃ©ments
+ *                dans la liste
+ *-------------------------------------------------------------------------
+ */
+void debugListe(Message_t* liste)
 {
     Message_t* cour = liste;
     int cpt = 1;
@@ -132,19 +150,22 @@ void afficherListe(Message_t* liste)
     while(cour != NULL)
     {
         printf("Message %d:\n", cpt);
-        afficherElement(cour);
+        debugElement(cour);
         cour = cour->suivant;
         cpt++;
     }
 }
 
-/*-------------------------------------------------------------------------*/
-/* afficherElement   Affiche un élément d'une liste de message             */
-/*                                                                         */
-/* Entrées: element, pointeur sur un structure message                     */
-/*                                                                         */
-/*-------------------------------------------------------------------------*/
-void afficherElement(Message_t* element)
+/*-------------------------------------------------------------------------
+ * debugElement   Affiche un ï¿½lï¿½ment d'une liste de message                
+ *                                                                         
+ * Entrï¿½es: element, pointeur sur un structure message                     
+ *                                                                         
+ *   Affiche un Ã©lÃ©ments de la liste de maniÃ¨re complÃ¨te                   
+ *    (adresse mÃ©moire, contenu et adresse du suivant)                     
+ *-------------------------------------------------------------------------
+ */
+void debugElement(Message_t* element)
 {
     printf("\tpt: %p\n", element);
     printf("\tDate debut: %d\n", element->dateDebut);
