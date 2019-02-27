@@ -12,7 +12,7 @@ void    modifDateDebut      (Message_t*, int, int);
 void    afficherMotif       (Message_t*, const char*);
 char*   rechercherMotif     (char*, const char*);
 int     dateAj              ();
-void    formateChaine       (char*);
+int     formateChaine       (char*);
 void    afficherElement     (Message_t*);
 void    afficherListe       (Message_t*);
 
@@ -188,9 +188,10 @@ int lireFichier(Message_t** liste, const char* filename)
         {
             if(fscanf(file, "%d %d", &ddebut, &dfin) == 2) // On créer un nouvel élément seulement si les 2 valeurs (début et fin) sont lues
             {
-                fgetc(file);
-                fgets(msg, 100, file);
-                formateChaine(msg);
+                fgetc(file); // On ignore l'espace entre la date de fin et le message
+                fgets(msg, 100, file); // Message de 100 caractere maximum
+                if(!formateChaine(msg)) // Finis par '\0' donc on doit aller a la ligne suivante
+                    while(fgetc(file) != EOF && fgetc(file) != '\n');
 
                 if((element = creerElement(ddebut, dfin, msg)) != NULL)
                     ajouterElement(liste, element);
@@ -452,22 +453,29 @@ int dateAj()
  *  formateChaine   formate un tableau de caractere en chaine de caractere
  * 
  * Entrees: chaine, tableau de caractere finissant pas '\0' ou '\n'
+ * 
+ * Sortie: modif, entier (booleen) 0 -> la chaine n'a pas ete modifiee
+ *                                 1 -> la chaine a ete modifiee
  *                                                                         
- *  Parcours le tableau jusqu'au '\0' ou '\n' et le remplace par '\0'
- *      Si la chaine etait correcte -> pas de modification
- *      Sinon -> on la met au format chaine de caractere en C (tableau
- *                      de caractere finissant par '\0')
+ *  Parcours le tableau jusqu'au '\0' ou '\n'. Si c'est un '\n',
+ *      le remplace par '\0' et renvoie 1 sinon renvoie 0;
  * 
  * Lexique: i, entier permettant de parcourir le tableau
  *-------------------------------------------------------------------------
  */
-void formateChaine(char* chaine)
+int formateChaine(char* chaine)
 {
     int i = 0;
+    int modif = 0;
     while(chaine[i] != '\0' && chaine[i] != '\n')
         i++;
 
-    chaine[i] = '\0';
+    if(chaine[i] == '\n')
+    {
+        chaine[i] = '\0';
+        modif = 1;
+    }
+    return modif;
 }
 
 /*-------------------------------------------------------------------------
