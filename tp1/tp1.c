@@ -61,9 +61,7 @@ int main(int argc, char* argv[])
         supprimerExpire(&maListe);
 
         printf("\n\nEcriture dans le fichier %s...\n", argv[2]);
-        if(ecrireFichier(maListe, argv[2]))
-            afficherListe(maListe);
-        else
+        if(!ecrireFichier(maListe, argv[2]))
             printf("Erreur sur le fichier\n");
 
         do {
