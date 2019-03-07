@@ -40,7 +40,7 @@ void    afficherListe       (Message_t*);
 int main(int argc, char* argv[])
 {
     Message_t*  maListe = NULL;
-    int         choix = 0;
+    int         choix   = 0;
 
     if(argc < 3)
     {
