@@ -61,8 +61,11 @@ int sommet(Pile_t* pile, T* element)
 
 void libererPile(Pile_t* pile)
 {
-    free(pile->tab);
-    free(pile);
+    if(pile != NULL)
+    {
+        free(pile->tab);
+        free(pile);
+    }
 }
 
 void debugPile(Pile_t* pile)
