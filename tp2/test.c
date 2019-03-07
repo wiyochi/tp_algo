@@ -13,6 +13,15 @@ int main()
     if(!initFile(&maFile, 10))
         return EXIT_FAILURE;
 
+    for(i = 0; i < 10; i++)
+    {
+        if(!empiler(maPile, i+1))
+            printf("ERREUR\n");
+    }
+    debugPile(maPile);
+    debugFile(maFile);
+
+/*
     debugFile(maFile);
     printf("Defile 1 element\n");
     if(!defiler(maFile, &var))
@@ -41,7 +50,7 @@ int main()
             printf("ERREUR ENFILAGE\n");
     }
     debugFile(maFile);
-
+*/
 /*
     debugPile(maPile);
     printf("Depile 1 element\n");
