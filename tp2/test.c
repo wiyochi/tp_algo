@@ -21,6 +21,26 @@ int main()
     debugPile(maPile);
     debugFile(maFile);
 
+    while(!pileVide(maPile))
+    {
+        if(!depiler(maPile, &var))
+            printf("ERREUR DEPILAGE\n");
+        if(!enfiler(maFile, var))
+            printf("ERREUR ENFILAGE\n");
+    }
+    debugPile(maPile);
+    debugFile(maFile);
+
+    while(!fileVide(maFile))
+    {
+        if(!defiler(maFile, &var))
+            printf("ERREUR DEFILAGE\n");
+        if(!empiler(maPile, var))
+            printf("ERREUR EMPILER\n");
+    }
+    debugPile(maPile);
+    debugFile(maFile);
+
 /*
     debugFile(maFile);
     printf("Defile 1 element\n");
