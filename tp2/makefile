@@ -1,16 +1,17 @@
 OPT = -g -Wall -Wextra
 LOG = @echo "\#MAKE"
+EXE = pile-file
 
-all: gestion-message
+all: $(EXE)
 
-gestion-message: tp1.c LC.o
-	gcc -o gestion-message tp1.c LC.o $(OPT)
+$(EXE): test.c pile.o
+	gcc -o $(EXE) test.c pile.o $(OPT)
 	$(LOG) "Executable généré"
 
-LC.o: LC.h LC.c
-	gcc -o LC.o -c LC.c $(OPT)
+pile.o: pile.h pile.c
+	gcc -o pile.o -c pile.c $(OPT)
 	$(LOG) "lib liste chainee généré"
 
 clean:
 	rm *.o
-	rm gestion-message
+	rm $(EXE)
