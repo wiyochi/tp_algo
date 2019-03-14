@@ -22,8 +22,9 @@ int main()
 
 void truc_it(int i, int n, int* T)
 {
-    int j, tmp, k, h;
+    int j  = i;
     int iL = i;
+    int tmp, k;
     int fin = 0;
     Pile_t* pile = NULL;
     
@@ -32,20 +33,47 @@ void truc_it(int i, int n, int* T)
 
     while(!fin)
     {
-        if(iL == (n-1))
+        printf("i: %d, j: %d\n", iL, j);
+        
+        while(iL < n && j < n)
         {
-            if(pileVide(pile))
+            tmp = T[iL];
+            T[iL] = T[j];
+            T[j] = tmp;
+
+            if(!empiler(pile, iL))
+                printf("ERREUR EMPILAGE\n");
+            if(!empiler(pile, j))
+                printf("ERREUR EMPILAGE\n");
+
+            iL += 1;
+            j = iL;
+        }
+
+        printf("[ ");
+        for(k = 0; k < n; k++)
+            printf("%d ", T[k]);
+        printf("]\n");
+
+        while(j >= n && !fin)
+        {
+            if(!pileVide(pile))
             {
-                fin = 1;
+                if(!depiler(pile, &j))
+                    printf("ERREUR DEPILAGE\n");
+                if(!depiler(pile, &iL))
+                    printf("ERREUR DEPILAGE\n");
+
+                tmp = T[iL];
+                T[iL] = T[j];
+                T[j] = tmp;
+
+                j += 1;
             }
             else
             {
-                
+                fin = 1;
             }
-        }
-        else
-        {
-
         }
     }
     libererPile(pile);
