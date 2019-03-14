@@ -1,12 +1,17 @@
 OPT = -g -Wall -Wextra
 LOG = @echo "\#MAKE"
-EXE = pile-file
+PF = pile-file
+TRUC = truc
 
-all: $(EXE)
+all: $(PF) $(TRUC)
 
-$(EXE): test.c pile.o file.o
-	gcc -o $(EXE) test.c pile.o file.o $(OPT)
-	$(LOG) "Executable généré"
+$(TRUC): truc.c pile.o
+	gcc -o $(TRUC) truc.c pile.o $(OPT)
+	$(LOG) "executable truc généré"
+
+$(PF): test.c pile.o file.o
+	gcc -o $(PF) test.c pile.o file.o $(OPT)
+	$(LOG) "excutable pile-file généré"
 
 pile.o: pile.h pile.c
 	gcc -o pile.o -c pile.c $(OPT)
@@ -18,4 +23,5 @@ file.o: file.h file.c
 
 clean:
 	rm *.o
-	rm $(EXE)
+	rm $(PF)
+	rm $(TRUC)
