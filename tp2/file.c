@@ -111,11 +111,11 @@ int enfiler(File_t* file, T element)
  *                                                               
  * Sortie:  element, adresse de l'élément à renvoyer
  *          booleen d'erreur
- *              0 -> la file est pleine, on ne peut pas ajouter d'élément
- *              1 -> l'élément à bien été ajouté
+ *              0 -> la file est vide, on ne peut pas retirer d'élément
+ *              1 -> l'élément à bien été retiré et renvoyé
  *
  * On regarde d'abord si la file est vide. Si elle ne l'est pas,
- * on enleve 1 au compteur d'éléments, on met l'élément au rangDernier
+ * on enleve 1 au compteur d'éléments, on copie l'élément au rangDernier
  * du tableau dans la case mémoire pointée par "element" et on décale
  * le rang de tête de file de 1 (modulo la taille de la file).
  * 
