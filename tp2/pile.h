@@ -17,8 +17,8 @@ struct Pile
 typedef struct Pile Pile_t;
 
 int     initPile    (Pile_t** pile, int taille);
-int     pileVide     (Pile_t* pile);
-int     pilePleine   (Pile_t* pile);
+int     pileVide    (Pile_t* pile);
+int     pilePleine  (Pile_t* pile);
 int     empiler     (Pile_t* pile, T element);
 int     depiler     (Pile_t* pile, T* element);
 int     sommet      (Pile_t* pile, T* element);
