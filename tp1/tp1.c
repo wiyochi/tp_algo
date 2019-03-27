@@ -40,7 +40,7 @@ void    afficherListe       (Message_t*);
 int main(int argc, char* argv[])
 {
     Message_t*  maListe = NULL;
-    int         choix = 0;
+    int         choix   = 0;
 
     if(argc < 3)
     {
@@ -193,6 +193,10 @@ int lireFichier(Message_t** liste, const char* filename)
 
                 if((element = creerElement(ddebut, dfin, msg)) != NULL)
                     ajouterElement(liste, element);
+            }
+            else
+            {
+                while(fgetc(file) != EOF && fgetc(file) != '\n'); // Si je la ligne ne commence pas par 2 entiers (les dates) alors on va a la ligne suivante
             }
         }
         fclose(file);
