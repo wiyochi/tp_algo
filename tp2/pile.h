@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define FORMAT "%d\n"
+#define FORMAT_PILE "%d"
 typedef int T;
 
 struct Pile

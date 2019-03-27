@@ -174,9 +174,14 @@ void debugFile(File_t* file)
     printf("\tCompteur: %d\n", file->compteur);
     printf("\tRang premier: %d\n", file->rangPremier);
     printf("\tRang dernier: %d\n", file->rangDernier);
-    for(i = file->rangPremier; i != file->rangDernier; i = (i+1)%file->tailleMax)
+    printf("\t[");
+    if(file->compteur > 0)
     {
-        printf("\t"FORMAT, (file->tab)[i]);
+        for(i = file->rangPremier; i != file->rangDernier; i = (i+1)%file->tailleMax)
+        {
+            printf(FORMAT_FILE", ", (file->tab)[i]);
+        }
+        printf(FORMAT_FILE, (file->tab)[i]);
     }
-    printf("\t"FORMAT, (file->tab)[i]);
+    printf("]\n");
 }

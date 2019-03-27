@@ -188,8 +188,10 @@ void debugPile(Pile_t* pile)
     printf("Pile:\n");
     printf("\tTaille max: %d\n", pile->tailleMax);
     printf("\tRang sommet: %d\n", pile->rangSommet);
+    printf("\t[");
     for(i = 0; i <= pile->rangSommet; i++)
     {
-        printf("\t"FORMAT, (pile->tab)[i]);
+        printf((i == pile->rangSommet ? FORMAT_PILE"" : FORMAT_PILE", "), (pile->tab)[i]);
     }
+    printf("]\n");
 }
