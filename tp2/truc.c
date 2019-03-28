@@ -9,13 +9,10 @@ void truc_it(int i, int n, int* T);
 int main()
 {
     int T[TAILLE]   = { 1, 2, 3 };
-    int T2[TAILLE]  = { 1, 2, 3 };
 
     truc(0, TAILLE, T);
-    printf("--------------------------------\n");
-    truc_it(0, TAILLE, T2);
-
-    return 0;
+    printf("---------\n");
+    truc_it(0, TAILLE, T);
 }
 
 void truc_it(int i, int n, int* T)
