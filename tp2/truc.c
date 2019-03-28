@@ -3,21 +3,16 @@
 
 #define TAILLE 3
 
-void truc(int i, int n, int* T);
+void truc   (int i, int n, int* T);
 void truc_it(int i, int n, int* T);
-
-char tab[5] = {'\0','\0','\0','\0','\0'};
 
 int main()
 {
-    int T[TAILLE] = { 1, 2, 3 };
-    int T2[TAILLE] = { 1, 2, 3 };
+    int T[TAILLE]   = { 1, 2, 3 };
 
     truc(0, TAILLE, T);
-    printf("--------------------------------\n");
-    truc_it(0, TAILLE, T2);
-
-    return 0;
+    printf("---------\n");
+    truc_it(0, TAILLE, T);
 }
 
 void truc_it(int i, int n, int* T)
@@ -33,18 +28,16 @@ void truc_it(int i, int n, int* T)
 
     while(!fin)
     {
-        printf("i: %d, j: %d\n", iL, j);
-        
-        while(iL < n && j < n)
+        while(iL < n)
         {
             tmp = T[iL];
             T[iL] = T[j];
             T[j] = tmp;
 
             if(!empiler(pile, iL))
-                printf("ERREUR EMPILAGE\n");
+                printf("ERREUR EMPILER\n");
             if(!empiler(pile, j))
-                printf("ERREUR EMPILAGE\n");
+                printf("ERREUR EMPILER\n");
 
             iL += 1;
             j = iL;
@@ -60,9 +53,9 @@ void truc_it(int i, int n, int* T)
             if(!pileVide(pile))
             {
                 if(!depiler(pile, &j))
-                    printf("ERREUR DEPILAGE\n");
+                    printf("ERREUR DEPILER\n");
                 if(!depiler(pile, &iL))
-                    printf("ERREUR DEPILAGE\n");
+                    printf("ERREUR DEPILER\n");
 
                 tmp = T[iL];
                 T[iL] = T[j];
@@ -83,16 +76,9 @@ void truc(int i, int n, int* T)
 {
     int j, tmp;
 
-    printf("%sTRUC(%d, %d, [", tab, i, n);
-    for(j = 0; j < n; j++)
-        printf("%d,", T[j]);
-    printf("]:\n");
-    tab[i] = '\t';
-
-
     if(i == (n-1))
     {
-        printf("\t%s-->[ ", tab);
+        printf("[ ");
         for(j = 0; j < n; j++)
         {
             printf("%d ", T[j]);
@@ -103,7 +89,6 @@ void truc(int i, int n, int* T)
     {
         for(j = i; j < n; j++)
         {
-            printf("%sj: %d\n", tab, j);
             tmp = T[i];
             T[i] = T[j];
             T[j] = tmp;
@@ -113,5 +98,4 @@ void truc(int i, int n, int* T)
             T[j] = tmp;
         }
     }
-    tab[i] = '\0';
 }

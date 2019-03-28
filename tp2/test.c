@@ -9,99 +9,77 @@ int main()
 
     if(!initPile(&maPile, 10))
         return EXIT_FAILURE;
-
     if(!initFile(&maFile, 10))
         return EXIT_FAILURE;
 
-    for(i = 0; i < 10; i++)
+    printf("=== Tests dépiler, défiler sur une liste sans éléments ===\n");
+    if(!depiler(maPile, &var))
+        printf("ERREUR DEPILER\n");
+    if(!defiler(maFile, &var))
+        printf("ERREUR DEFILER\n");
+    debugPile(maPile);
+    debugFile(maFile);
+
+    printf("\n=== Tests empiler, enfiler trop d'éléments ===\n");
+    var = 89;
+    for(i = 0; i < 15; i++)
     {
-        if(!empiler(maPile, i+1))
-            printf("ERREUR\n");
+        if(!empiler(maPile, var))
+            printf("ERREUR EMPILER\n");
+        if(!enfiler(maFile, var))
+            printf("ERREUR ENFILER\n");
     }
     debugPile(maPile);
     debugFile(maFile);
 
+    // Remise à zéro
     while(!pileVide(maPile))
     {
         if(!depiler(maPile, &var))
-            printf("ERREUR DEPILAGE\n");
-        if(!enfiler(maFile, var))
-            printf("ERREUR ENFILAGE\n");
+            printf("ERREUR DEPILER\n");
+    }
+    while(!fileVide(maFile))
+    {
+        if(!defiler(maFile, &var))
+            printf("ERREUR DEFILER\n");
+    }
+
+    printf("\n============== Tests de validité des implémentations de la pile et de la file ==============\n");
+    printf("On teste la pile et la file en essayant d'inverser le contenu d'une pile à l'aide d'une file\n");
+    printf("--------------------------------------------------------------------------------------------\n");
+    printf("On remplit la pile (avec les chiffres de 1 à 10 par exemple)\n");
+    for(i = 0; i < 10; i++)
+    {
+        if(!empiler(maPile, i+1))
+            printf("ERREUR EMPILER\n");
     }
     debugPile(maPile);
     debugFile(maFile);
 
+    printf("--------------------------------------------------------------------------------------------\n");
+    printf("On vide la pile et on enfile chaque élément qu'on dépile\n");
+    while(!pileVide(maPile))
+    {
+        if(!depiler(maPile, &var))
+            printf("ERREUR DEPILER\n");
+        if(!enfiler(maFile, var))
+            printf("ERREUR ENFILER\n");
+    }
+    debugPile(maPile);
+    debugFile(maFile);
+
+    printf("--------------------------------------------------------------------------------------------\n");
+    printf("On défile en remettant les éléments dans la pile\n");
     while(!fileVide(maFile))
     {
         if(!defiler(maFile, &var))
-            printf("ERREUR DEFILAGE\n");
+            printf("ERREUR DEFILER\n");
         if(!empiler(maPile, var))
             printf("ERREUR EMPILER\n");
     }
     debugPile(maPile);
     debugFile(maFile);
 
-/*
-    debugFile(maFile);
-    printf("Defile 1 element\n");
-    if(!defiler(maFile, &var))
-        printf("ERREUR DEFILAGE\n");
-    else
-        printf("var: %d\n", var);
-    printf("Enfile 1 element\n");
-    if(!enfiler(maFile, 54))
-        printf("ERREUR ENFILAGE\n");
-    debugFile(maFile);
-    printf("Enfile 1 element\n");
-    if(!enfiler(maFile, 62))
-        printf("ERREUR ENFILAGE\n");
-    debugFile(maFile);
-    printf("Defile 1 element\n");
-    if(!defiler(maFile, &var))
-        printf("ERREUR DEFILAGE\n");
-    else
-        printf("var: %d\n", var);
-    debugFile(maFile);
-
-    printf("Ajout de 10 element\n");
-    for(i = 0; i < 10; i++)
-    {
-        if(!enfiler(maFile, i))
-            printf("ERREUR ENFILAGE\n");
-    }
-    debugFile(maFile);
-*/
-/*
-    debugPile(maPile);
-    printf("Depile 1 element\n");
-    if(!depiler(maPile, &var))
-        printf("ERREUR DEPILER\n");
-    else
-        printf("var: %d\n", var);
-    debugPile(maPile);
-    printf("Ajout de 1 element\n");
-    if(!empiler(maPile, 54))
-        printf("ERREUR\n");
-    debugPile(maPile);
-    printf("Ajout de 1 element\n");
-    if(!empiler(maPile, 62))
-        printf("ERREUR\n");
-    debugPile(maPile);
-    printf("Depile 1 element\n");
-    if(!depiler(maPile, &var))
-        printf("ERREUR DEPILER\n");
-    else
-        printf("var: %d\n", var);
-    debugPile(maPile);
-    
-    printf("Ajout de 10 element\n");
-    for(i = 0; i < 10; i++)
-    {
-        if(!empiler(maPile, i))
-            printf("ERREUR\n");
-    }
-    debugPile(maPile);
-*/
     libererFile(maFile);
     libererPile(maPile);
 

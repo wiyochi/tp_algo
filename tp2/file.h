@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define FORMAT "%d\n"
+#define FORMAT_FILE "%d"
 typedef int T;
 
 struct File
