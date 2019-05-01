@@ -3,12 +3,9 @@
 
 #include "pile.h"
 
-#define FORMAT_ARBRE "%d"
-typedef int T;
-
 struct noeud
 {
-    T               valeur;
+    char            lettre;
     struct noeud*   lv;
     struct noeud*   lh;
 };
