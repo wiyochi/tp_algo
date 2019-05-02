@@ -2,7 +2,12 @@
 
 int main()
 {
-    printf("Hello World\n");
+    noeud_t* arbre = NULL;
+    char[] mot = "test";
+
+    ajouter_mot(&arbre, mot, 4);
+
+    debugArbre(arbre);
 
     return 0;
 }
