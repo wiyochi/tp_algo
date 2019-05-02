@@ -5,7 +5,7 @@ TEST = test
 all: $(TEST)
 
 $(TEST): test.c pile.o arbre.o
-	gcc -o $(TEST) test.c pile.o $(OPT)
+	gcc -o $(TEST) test.c pile.o arbre.o $(OPT)
 	$(LOG) "executable $(TEST) généré"
 
 pile.o: pile.h pile.c

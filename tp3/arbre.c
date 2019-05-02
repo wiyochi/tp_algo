@@ -14,23 +14,24 @@ noeud_t* creer_cell(char l)
 
 void adj_cell(noeud_t** prec, noeud_t* nouv)
 {
-    nouv->lh = (*prec)->lh;
-    (*prec)->lh = nouv;
+    nouv->lh = (*prec);
+    *prec = nouv;
 }
 
 int rech_prec(noeud_t** liste, char l, noeud_t*** prec)
 {
     *prec = liste;
-    noeud_t*  cour = *liste;
+    noeud_t* cour = *liste;
 
-    while(cour != NULL && cour->lettre <= l)
+    while(cour != NULL && LOWER(cour->lettre) < LOWER(l))
     {
         *prec = &(cour->lh);
         cour = cour->lh;
     }
-    return (cour->lettre == l);
+    return (cour != NULL && LOWER(cour->lettre) == LOWER(l));
 }
 
+// TODO: separer la fct en deux -> une qui recherche et une qui modifie
 void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
 {
     int         i;
@@ -44,22 +45,23 @@ void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
         {
             if(i == (tailleMot - 1))
             {
-                if((*prec)->lettre >= 'a' && (*prec)->lettre <= 'z')
-                    (*prec)->lettre = (*prec)->lettre - 'a' + 'A';
+                (*prec)->lettre = UPPER((*prec)->lettre);
             }
             else
             {
-                r = &((*r)->lv);
+                r = &((*prec)->lv);
             }
         }
         else
         {
-            for(; i < tailleMot; i++)
+            for(; i < tailleMot-1; i++)
             {
                 nouv = creer_cell(mot[i]);
                 adj_cell(prec, nouv);
-                prec = &(*(prec)->lv);
+                prec = &((*prec)->lv);
             }
+            nouv = creer_cell(UPPER(mot[i]));
+            adj_cell(prec, nouv);
         }
     }
 }
@@ -76,19 +78,20 @@ void debugArbre(noeud_t* racine)
 
     while(!pileVide(pile) || cour != NULL)
     {
+        for(i = 0; i < cmp; i++) printf("-");
+        printf("%c\n", cour->lettre);
+        
         if(!empiler(pile, cour))
             printf("ERREUR EMPILER\n");
         cour = cour->lv;
         cmp++;
-
-        for(i = 0; i < cmp; i++) printf("\t");
-        printf("%c\n", cour->lettre);
 
         while(cour == NULL && !pileVide(pile))
         {
             if(!depiler(pile, &cour))
                 printf("ERREUR DEPILER\n");
             cour = cour->lh;
+            cmp--;
         }
     }
 }

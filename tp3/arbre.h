@@ -3,6 +3,10 @@
 
 #include "pile.h"
 
+#define UPPER(l) (((l)>='a'&&(l)<='z')?((l)-'a'+'A'):(l))
+#define LOWER(l) (((l)>='A'&&(l)<='Z')?((l)-'A'+'a'):(l))
+#define LOG(x) printf(x"\n");
+
 struct noeud
 {
     char            lettre;

@@ -3,11 +3,18 @@
 int main()
 {
     noeud_t* arbre = NULL;
-    char[] mot = "test";
 
-    ajouter_mot(&arbre, mot, 4);
+    ajouter_mot(&arbre, "test", 4);
+    ajouter_mot(&arbre, "arbre", 5);
+    ajouter_mot(&arbre, "art", 3);
+    ajouter_mot(&arbre, "arts", 4);
+    ajouter_mot(&arbre, "terre", 5);
+    ajouter_mot(&arbre, "titi", 4);
 
     debugArbre(arbre);
+
+    printf(" /\n");
+    printf("/\n");
 
     return 0;
 }
