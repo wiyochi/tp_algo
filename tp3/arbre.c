@@ -35,17 +35,15 @@ int recherche(noeud_t** racine, char* mot, int tailleMot, noeud_t** derCell)
 {
     int         i = 0;
     noeud_t**   r = racine;
-    noeud_t*    cour = NULL;
     noeud_t**   prec = NULL;
 
     while(i < tailleMot && rech_prec(r, mot[i], &prec))
     {
-        cour = *prec;
+        *derCell = *prec;
         r = &((*prec)->lv);
         i++;
     }
 
-    *derCell = cour;
     return i;
 }
 
