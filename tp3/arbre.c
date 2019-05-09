@@ -33,10 +33,10 @@ int rech_prec(noeud_t** liste, char l, noeud_t*** prec)
 
 int recherche(noeud_t** racine, char* mot, int tailleMot, noeud_t** derCell)
 {
-    int         i;
+    int         i = 0;
     noeud_t**   r = racine;
-    noeud_t*    cour;
-    noeud_t**   prec;
+    noeud_t*    cour = NULL;
+    noeud_t**   prec = NULL;
 
     while(i < tailleMot && rech_prec(r, mot[i], &prec))
     {
@@ -52,29 +52,28 @@ int recherche(noeud_t** racine, char* mot, int tailleMot, noeud_t** derCell)
 // A DEBOGGER
 void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
 {
-    int         i;
-    noeud_t**   prec;
-    noeud_t*    nouv;
-    noeud_t*    derCell;
+    int         i = 0;
+    noeud_t**   prec = racine;
+    noeud_t*    nouv = NULL;
+    noeud_t*    derCell = NULL;
 
     i = recherche(racine, mot, tailleMot, &derCell);
-    printf("# mot: %s\n", mot);
-    prec = &(derCell->lv);
+    if(derCell == NULL)
+        rech_prec(racine, mot[0], &prec);           // Si la 1ere lettre n'existe pas dans le 1er niveau de l'arbre, on recherche la place que doit prendre cette 1ere lettre
+    else
+        rech_prec(&(derCell->lv), mot[i], &prec);   // Sinon, on recherche la place de la lettre suivante
 
     while(i < tailleMot)
     {
         nouv = creer_cell(mot[i]);
         adj_cell(prec, nouv);
+
+        derCell = *prec;
         prec = &((*prec)->lv);
-        derCell = derCell->lv;
         i++;
     }
-
-
-    if(derCell != NULL)
-    {
-        (*prec)->lettre = UPPER((*prec)->lettre);
-    }
+    
+    derCell->lettre = UPPER(derCell->lettre);
 }
 
 // TODO: separer la fct en deux -> une qui recherche et une qui modifie
