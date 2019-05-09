@@ -31,8 +31,54 @@ int rech_prec(noeud_t** liste, char l, noeud_t*** prec)
     return (cour != NULL && LOWER(cour->lettre) == LOWER(l));
 }
 
-// TODO: separer la fct en deux -> une qui recherche et une qui modifie
+int recherche(noeud_t** racine, char* mot, int tailleMot, noeud_t** derCell)
+{
+    int         i;
+    noeud_t**   r = racine;
+    noeud_t*    cour;
+    noeud_t**   prec;
+
+    while(i < tailleMot && rech_prec(r, mot[i], &prec))
+    {
+        cour = *prec;
+        r = &((*prec)->lv);
+        i++;
+    }
+
+    *derCell = cour;
+    return i;
+}
+
+// A DEBOGGER
 void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
+{
+    int         i;
+    noeud_t**   prec;
+    noeud_t*    nouv;
+    noeud_t*    derCell;
+
+    i = recherche(racine, mot, tailleMot, &derCell);
+    printf("# mot: %s\n", mot);
+    prec = &(derCell->lv);
+
+    while(i < tailleMot)
+    {
+        nouv = creer_cell(mot[i]);
+        adj_cell(prec, nouv);
+        prec = &((*prec)->lv);
+        derCell = derCell->lv;
+        i++;
+    }
+
+
+    if(derCell != NULL)
+    {
+        (*prec)->lettre = UPPER((*prec)->lettre);
+    }
+}
+
+// TODO: separer la fct en deux -> une qui recherche et une qui modifie
+/*void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
 {
     int         i;
     noeud_t**   prec;
@@ -65,6 +111,7 @@ void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
         }
     }
 }
+*/
 
 void debugArbre(noeud_t* racine)
 {
@@ -79,7 +126,7 @@ void debugArbre(noeud_t* racine)
     while(!pileVide(pile) || cour != NULL)
     {
         for(i = 0; i < cmp; i++) printf("-");
-        printf("%c\n", cour->lettre);
+        printf("%c : %p\n", cour->lettre, cour);
         
         if(!empiler(pile, cour))
             printf("ERREUR EMPILER\n");
