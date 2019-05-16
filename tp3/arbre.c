@@ -23,26 +23,16 @@ noeud_t* creer_cell(char l)
         nouv->lh = NULL;
     }
     return nouv;
-}/*-------------------------------------------------------------------------
- * adjonctionCellule   Ajoute une cellule a la liste de message            
- *                                                                         
- * Entrees: prec, adresse du champs "suivant" de la cellule precedente     
- *          element, adresse de la cellule qu'il faut ajouter a la liste   
- *                                                                         
- *   Edite les liens du precedent et de l'element pour l'ajouter dans la   
- *    liste chainee                                                        
- *-------------------------------------------------------------------------
- */
+}
 
 /*---------------------------------------------------------------
  * adj_cell      ajoute un nouveau point avec un precedent
  *                                                               
  * Entree: prec, adresse du champs lien vertical ou lien horizontal
- *         nouv, adress
+ *         nouv, adresse du nouveau point a ajouter
  *
- * On essaie d'allouer un point d'arbre, si la memoire est suffisante
- * on initialise son premier champs avec le caractere donne et on met
- * les champs de lien vertical et horizontal a NULL
+ * Edite les liens du precedent et du nouveau point pour l'ajouter
+ * dans l'arbre
  *---------------------------------------------------------------
  */
 void adj_cell(noeud_t** prec, noeud_t* nouv)
@@ -51,6 +41,28 @@ void adj_cell(noeud_t** prec, noeud_t* nouv)
     *prec = nouv;
 }
 
+/*---------------------------------------------------------------
+ * rech_prec      Recherche le precedent d'un point dans une liste chainee
+ *                  (lien horizontal d'un arbre)
+ *                                                               
+ * Entree: liste, adresse du pointeur de liste
+ *         l, caractere recherche
+ *                                                               
+ * Sortie: prec, adresse du champs "lien horizontal" du point precedent au point recherche
+ *         un booleen, VRAI -> le champs lh trouve pointe bien sur un point qui a le caractere donne
+ *                     FAUX -> le champs lh trouve ne pointe pas sur un point qui a le caractere donne
+ *                              mais sur l'endroit ou il devrait se trouve
+ *
+ * On fait pointer prec sur le pointeur de debut de liste et le cour sur le premier
+ * element. Tant qu'on est pas a la fin de la liste et qu'on a pas trouve la position
+ * voulue de la lettre recherchee, on avance dans la liste (via le lien vertical) en
+ * deplacant les pointeurs prec et cour. Lorsqu'on trouve la position de la lettre, le
+ * prec contient la bonne adresse et on renvoie le booleen en testant si la lettre de
+ * l'element courant est la bonne ou non.
+ * 
+ * Lexique: cour, pointeur sur l'element courant dont on regarde la lettre
+ *---------------------------------------------------------------
+ */
 int rech_prec(noeud_t** liste, char l, noeud_t*** prec)
 {
     *prec = liste;
@@ -64,6 +76,21 @@ int rech_prec(noeud_t** liste, char l, noeud_t*** prec)
     return (cour != NULL && LOWER(cour->lettre) == LOWER(l));
 }
 
+/*---------------------------------------------------------------
+ * recherche      Recherche un mot dans un arbre
+ *                                                               
+ * Entree: racine, adresse du pointeur de l'arbre
+ *         mot, chaine de caractere contenant le mot qu'on recherche
+ *         tailleMot, taille de "mot"
+ *                                                               
+ * Sortie: derCell, pointeur sur le dernier point existant du mot
+ *         entier representant l'indice de la derniere lettre du mot trouvee dans l'arbre
+ *
+ * 
+ * 
+ * Lexique: cour, pointeur sur l'element courant dont on regarde la lettre
+ *---------------------------------------------------------------
+ */
 int recherche(noeud_t** racine, char* mot, int tailleMot, noeud_t** derCell)
 {
     int         i = 0;
