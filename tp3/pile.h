@@ -5,8 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+struct noeud;
+
 #define FORMAT_PILE "%p"
-typedef void* T;
+typedef struct noeud* T;
 
 struct Pile
 {

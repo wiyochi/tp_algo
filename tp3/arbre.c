@@ -31,8 +31,51 @@ int rech_prec(noeud_t** liste, char l, noeud_t*** prec)
     return (cour != NULL && LOWER(cour->lettre) == LOWER(l));
 }
 
-// TODO: separer la fct en deux -> une qui recherche et une qui modifie
+int recherche(noeud_t** racine, char* mot, int tailleMot, noeud_t** derCell)
+{
+    int         i = 0;
+    noeud_t**   r = racine;
+    noeud_t**   prec = NULL;
+
+    while(i < tailleMot && rech_prec(r, mot[i], &prec))
+    {
+        *derCell = *prec;
+        r = &((*prec)->lv);
+        i++;
+    }
+
+    return i;
+}
+
+// A DEBOGGER
 void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
+{
+    int         i = 0;
+    noeud_t**   prec = racine;
+    noeud_t*    nouv = NULL;
+    noeud_t*    derCell = NULL;
+
+    i = recherche(racine, mot, tailleMot, &derCell);
+    if(derCell == NULL)
+        rech_prec(racine, mot[0], &prec);           // Si la 1ere lettre n'existe pas dans le 1er niveau de l'arbre, on recherche la place que doit prendre cette 1ere lettre
+    else
+        rech_prec(&(derCell->lv), mot[i], &prec);   // Sinon, on recherche la place de la lettre suivante
+
+    while(i < tailleMot)
+    {
+        nouv = creer_cell(mot[i]);
+        adj_cell(prec, nouv);
+
+        derCell = *prec;
+        prec = &((*prec)->lv);
+        i++;
+    }
+    
+    derCell->lettre = UPPER(derCell->lettre);
+}
+
+// TODO: separer la fct en deux -> une qui recherche et une qui modifie
+/*void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
 {
     int         i;
     noeud_t**   prec;
@@ -65,6 +108,7 @@ void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
         }
     }
 }
+*/
 
 void debugArbre(noeud_t* racine)
 {
@@ -79,7 +123,7 @@ void debugArbre(noeud_t* racine)
     while(!pileVide(pile) || cour != NULL)
     {
         for(i = 0; i < cmp; i++) printf("-");
-        printf("%c\n", cour->lettre);
+        printf("%c : %p\n", cour->lettre, cour);
         
         if(!empiler(pile, cour))
             printf("ERREUR EMPILER\n");
