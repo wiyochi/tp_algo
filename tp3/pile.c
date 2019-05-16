@@ -170,6 +170,18 @@ void libererPile(Pile_t* pile)
     }
 }
 
+T* affichagePile(Pile_t* pile)
+{
+    int j;
+    T* mot = (T*)malloc((pile->rangSommet + 1) * sizeof(T));
+    
+    for (j = 0; j <= (pile->rangSommet); j++)
+    {
+        mot[j] = (pile->tab)[j];
+    }
+    return mot;
+}
+
 /*---------------------------------------------------------------
  * debugPile      Affiche les champs de la tête et les éléments de la pile
  *                                                               

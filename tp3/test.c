@@ -14,8 +14,17 @@ int main()
     ajouter_mot(&arbre, "", 0);
     ajouter_mot(&arbre, "arbre", 5);
     ajouter_mot(&arbre, "arbre", 5);
+    ajouter_mot(&arbre, "abouti", 6);
 
     debugArbre(arbre);
+
+    affichage_arbre(arbre, "");
+
+    printf("\n");
+    affichage_motif(arbre, "a", 1);
+
+    printf("\n");
+    affichage_motif(arbre, "ar", 2);
 
     return 0;
 }

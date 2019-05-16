@@ -136,6 +136,57 @@ void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
     }
 }
 
+void affichage_arbre(noeud_t* a, char* prefixe)
+{
+    noeud_t*    cour        = a;
+    noeud_t*    car_sommet  = NULL;
+    Pile_t*     pile        = NULL;
+    noeud_t**   motAffiche  = NULL; 
+    int         i;
+
+    if(!initPile(&pile, TAILLE_MAX))
+        exit(EXIT_FAILURE);
+
+    while ((!pileVide(pile)) ||  (cour!=NULL))
+    {
+        if(!empiler(pile, cour))
+            printf("ERREUR EMPILER\n");
+        cour=cour->lv;
+
+        if(!sommet(pile, &car_sommet))
+            printf("ERREUR SOMMET\n");
+        if ((car_sommet->lettre >= 'A') && (car_sommet->lettre <= 'Z'))
+        {
+            printf("%s", prefixe);
+            motAffiche = affichagePile(pile);
+            for(i = 0; i <= pile->rangSommet; i++)
+                printf("%c", tolower(motAffiche[i]->lettre));
+            printf("\n");
+        }
+
+        while((cour == NULL) && (!pileVide(pile)))
+        {
+            if(!depiler(pile, &cour))
+                printf("ERREUR DEPILER\n");
+            cour=cour->lh;
+        }
+    }
+    libererPile(pile);
+}
+
+void affichage_motif(noeud_t* racine, char* motif, int tailleMotif)
+{
+    noeud_t*    racineMotif = NULL;
+    int         ind         = 0;
+
+    ind = recherche(&racine, motif, tailleMotif, &racineMotif);
+
+    if(ind == tailleMotif)
+    {
+        affichageArbre(racineMotif->lv, motif);
+    }
+}
+
 void debugArbre(noeud_t* racine)
 {
     noeud_t*    cour = racine;
@@ -164,4 +215,6 @@ void debugArbre(noeud_t* racine)
             cmp--;
         }
     }
+
+    libererPile(pile);
 }
