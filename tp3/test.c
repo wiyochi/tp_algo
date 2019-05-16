@@ -11,6 +11,9 @@ int main()
     ajouter_mot(&arbre, "terre", 5);
     ajouter_mot(&arbre, "titi", 4);
     ajouter_mot(&arbre, "titiar", 6);
+    ajouter_mot(&arbre, "", 0);
+    ajouter_mot(&arbre, "arbre", 5);
+    ajouter_mot(&arbre, "arbre", 5);
 
     debugArbre(arbre);
 

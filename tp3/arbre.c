@@ -1,5 +1,18 @@
 #include "arbre.h"
 
+/*---------------------------------------------------------------
+ * creer_cell      Creer et initialise un point d'arbre
+ *                                                               
+ * Entree: l, caractere à inserer dans le nouveau point
+ *                                                               
+ * Sortie:  pointeur sur le nouveau point alloue
+ *              (ou NULL si il n'y a pas assez de memoire)
+ *
+ * On essaie d'allouer un point d'arbre, si la memoire est suffisante
+ * on initialise son premier champs avec le caractere donne et on met
+ * les champs de lien vertical et horizontal a NULL
+ *---------------------------------------------------------------
+ */
 noeud_t* creer_cell(char l)
 {
     noeud_t* nouv = (noeud_t*)malloc(sizeof(noeud_t));
@@ -10,8 +23,28 @@ noeud_t* creer_cell(char l)
         nouv->lh = NULL;
     }
     return nouv;
-}
+}/*-------------------------------------------------------------------------
+ * adjonctionCellule   Ajoute une cellule a la liste de message            
+ *                                                                         
+ * Entrees: prec, adresse du champs "suivant" de la cellule precedente     
+ *          element, adresse de la cellule qu'il faut ajouter a la liste   
+ *                                                                         
+ *   Edite les liens du precedent et de l'element pour l'ajouter dans la   
+ *    liste chainee                                                        
+ *-------------------------------------------------------------------------
+ */
 
+/*---------------------------------------------------------------
+ * adj_cell      ajoute un nouveau point avec un precedent
+ *                                                               
+ * Entree: prec, adresse du champs lien vertical ou lien horizontal
+ *         nouv, adress
+ *
+ * On essaie d'allouer un point d'arbre, si la memoire est suffisante
+ * on initialise son premier champs avec le caractere donne et on met
+ * les champs de lien vertical et horizontal a NULL
+ *---------------------------------------------------------------
+ */
 void adj_cell(noeud_t** prec, noeud_t* nouv)
 {
     nouv->lh = (*prec);
@@ -47,68 +80,34 @@ int recherche(noeud_t** racine, char* mot, int tailleMot, noeud_t** derCell)
     return i;
 }
 
-// A DEBOGGER
 void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
 {
-    int         i = 0;
-    noeud_t**   prec = racine;
-    noeud_t*    nouv = NULL;
+    int         i       = 0;
+    noeud_t**   prec    = racine;
+    noeud_t*    nouv    = NULL;
     noeud_t*    derCell = NULL;
 
-    i = recherche(racine, mot, tailleMot, &derCell);
-    if(derCell == NULL)
-        rech_prec(racine, mot[0], &prec);           // Si la 1ere lettre n'existe pas dans le 1er niveau de l'arbre, on recherche la place que doit prendre cette 1ere lettre
-    else
-        rech_prec(&(derCell->lv), mot[i], &prec);   // Sinon, on recherche la place de la lettre suivante
-
-    while(i < tailleMot)
+    if(tailleMot > 0)
     {
-        nouv = creer_cell(mot[i]);
-        adj_cell(prec, nouv);
-
-        derCell = *prec;
-        prec = &((*prec)->lv);
-        i++;
-    }
-    
-    derCell->lettre = UPPER(derCell->lettre);
-}
-
-// TODO: separer la fct en deux -> une qui recherche et une qui modifie
-/*void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
-{
-    int         i;
-    noeud_t**   prec;
-    noeud_t**   r = racine;
-    noeud_t*    nouv;
-
-    for(i = 0; i < tailleMot; i++)
-    {
-        if(rech_prec(r, mot[i], &prec))
-        {
-            if(i == (tailleMot - 1))
-            {
-                (*prec)->lettre = UPPER((*prec)->lettre);
-            }
-            else
-            {
-                r = &((*prec)->lv);
-            }
-        }
+        i = recherche(racine, mot, tailleMot, &derCell);
+        if(derCell == NULL)
+            rech_prec(racine, mot[0], &prec);           // Si la 1ere lettre n'existe pas dans le 1er niveau de l'arbre, on recherche la place que doit prendre cette 1ere lettre
         else
+            rech_prec(&(derCell->lv), mot[i], &prec);   // Sinon, on recherche la place de la lettre suivante
+
+        while(i < tailleMot)
         {
-            for(; i < tailleMot-1; i++)
-            {
-                nouv = creer_cell(mot[i]);
-                adj_cell(prec, nouv);
-                prec = &((*prec)->lv);
-            }
-            nouv = creer_cell(UPPER(mot[i]));
+            nouv = creer_cell(mot[i]);
             adj_cell(prec, nouv);
+
+            derCell = *prec;
+            prec = &((*prec)->lv);
+            i++;
         }
+        
+        derCell->lettre = UPPER(derCell->lettre);
     }
 }
-*/
 
 void debugArbre(noeud_t* racine)
 {
