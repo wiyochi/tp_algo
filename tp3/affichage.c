@@ -1,14 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "arbre.h"
+#include "affichage.h"
 
-void affichageLettres( char* lettres, int i)
+void affichagePile(Pile_t* pile)
 {
     int j;
-    for j=0; j<i; j++
+    for (j=0; j<(pile->rangSommet); j++)
     {
-        printf("%c",lettres[j]);
+        printf("%c",*(pile->tab)[j]);
 
     } 
     printf("\n");
@@ -17,23 +14,23 @@ void affichageLettres( char* lettres, int i)
 void affichage( noeud_t** a)
 {
     noeud_t* cour = *a;
-    pile_t pile;
-    char* lettres[50];
-    int i=0; 
+    Pile_t* pile; 
+    T car_sommet;
+
+    initPile(&pile, TAILLE_MAX);
     while ((!pileVide(pile)) ||  (cour==NULL))
     {
         empiler(pile, cour);
-        lettres[i]=cour->lettre;
-        i++;
         cour=cour->lv;
-        if (lettres[i] >= 'A' || lettres[i] <='Z')
+        sommet(pile, car_sommet);
+
+        if ((car_sommet->lettre>='A') || (car_sommet->lettre<='Z'))
         {
-            affichageLettres(lettres, i);
+            affichagePile(pile);
         }
         while((cour != NULL) && (!pileVide(pile)))
         {
-            depiler(pile, &cour);
-            i--;
+            depiler(pile, cour);
             cour=cour->lh;
         }
     }
