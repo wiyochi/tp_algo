@@ -10,3 +10,12 @@ unsigned int hash_string(const char *str)
          
     return (hash & 0x7FFFFFFF)%HASH_MAX;
 }
+
+int creer_cell(cell_t** nouv, char* mot, char* trad)
+{
+    *nouv = (cell_t*)malloc(sizeof(cell_t));
+    if(*nouv != NULL)
+    {
+        (*nouv)->
+    }
+}
