@@ -25,5 +25,7 @@ int main()
 
     debug_table(MAJ);
 
+    liberer_table(MAJ);
+
     return 0;
 }

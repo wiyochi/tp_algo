@@ -19,9 +19,11 @@ typedef struct cell cell_t;
 unsigned int    hash_string     (const char *str);
 int             creer_cell      (cell_t** nouv, char* mot, char* trad);
 void            adj_cell        (cell_t* nouv, cell_t** prec);
+void            liberer_cell    (cell_t** prec);
 int             rech_cell       (cell_t* liste, char* mot, cell_t** trouve);
 cell_t**        init_table      ();
 void            ajouter_table   (cell_t** MAJ, char* mot, char* trad);
 void            debug_table     (cell_t** MAJ);
+void            liberer_table   (cell_t** MAJ);
 
 #endif // !_DICTIONNAIRE_H_

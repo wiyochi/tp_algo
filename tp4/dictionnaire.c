@@ -40,6 +40,16 @@ void adj_cell(cell_t* nouv, cell_t** prec)
     (*prec) = nouv;
 }
 
+void liberer_cell(cell_t** prec)
+{
+    cell_t* suppr = (*prec);
+    (*prec) = suppr->suivant;
+    free(suppr->mot);
+    printf("trad: %s\n", suppr->trad);
+    free(suppr->trad);
+    free(suppr);
+}
+
 int rech_cell(cell_t* liste, char* mot, cell_t** trouve)
 {
     cell_t* cour = liste;
@@ -105,4 +115,17 @@ void debug_table(cell_t** MAJ)
         }
         printf("\n");
     }
+}
+
+void liberer_table(cell_t** MAJ)
+{
+    int i;
+
+    for(i = 0; i < HASH_MAX; i++)
+    {
+        while(MAJ[i] != NULL)
+            liberer_cell(&(MAJ[i]));
+        MAJ[i] = NULL;
+    }
+    free(MAJ);
 }
