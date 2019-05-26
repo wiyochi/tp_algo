@@ -86,9 +86,16 @@ int rech_prec(noeud_t** liste, char l, noeud_t*** prec)
  * Sortie: derCell, pointeur sur le dernier point existant du mot
  *         entier representant l'indice de la derniere lettre du mot trouvee dans l'arbre
  *
+ * Pour chaque lettre du mot, on recherche le precedent de cette lettre dans la
+ * sous-liste chainee du niveau de la lettre (la 1ere lettre est recherchee dans les
+ * racines, la 2eme dans la sous-liste des fils du point contenant la 1ere lettre etc).
+ * On s'arrete soit à la fin du mot soit lorsqu'il n'y a plus de lettre correspondante
+ * dans l'arbre. On renvoie alors l'indice de la lettre dans le mot ou on s'est arrete
+ * et un pointeur sur la derniere cellule de l'arbre contenant une lettre du mot.
  * 
- * 
- * Lexique: cour, pointeur sur l'element courant dont on regarde la lettre
+ * Lexique: i, indice de la lettre du mot traitee
+ *          r, pointeur sur la derniere lettre connue du mot dans l'arbre
+ *          prec, pointeur sur le champs suivant du precedent a la lettre dans la sous-liste
  *---------------------------------------------------------------
  */
 int recherche(noeud_t** racine, char* mot, int tailleMot, noeud_t** derCell)
@@ -107,6 +114,28 @@ int recherche(noeud_t** racine, char* mot, int tailleMot, noeud_t** derCell)
     return i;
 }
 
+/*---------------------------------------------------------------
+ * recherche      Recherche un mot dans un arbre
+ *                                                               
+ * Entree: racine, adresse du pointeur de l'arbre
+ *         mot, chaine de caractere contenant le mot qu'on recherche
+ *         tailleMot, taille de "mot"
+ *                                                               
+ * Sortie: derCell, pointeur sur le dernier point existant du mot
+ *         entier representant l'indice de la derniere lettre du mot trouvee dans l'arbre
+ *
+ * Pour chaque lettre du mot, on recherche le precedent de cette lettre dans la
+ * sous-liste chainee du niveau de la lettre (la 1ere lettre est recherchee dans les
+ * racines, la 2eme dans la sous-liste des fils du point contenant la 1ere lettre etc).
+ * On s'arrete soit à la fin du mot soit lorsqu'il n'y a plus de lettre correspondante
+ * dans l'arbre. On renvoie alors l'indice de la lettre dans le mot ou on s'est arrete
+ * et un pointeur sur la derniere cellule de l'arbre contenant une lettre du mot.
+ * 
+ * Lexique: i, indice de la lettre du mot traitee
+ *          r, pointeur sur la derniere lettre connue du mot dans l'arbre
+ *          prec, pointeur sur le champs suivant du precedent a la lettre dans la sous-liste
+ *---------------------------------------------------------------
+ */
 void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
 {
     int         i       = 0;
@@ -183,7 +212,7 @@ void affichage_motif(noeud_t* racine, char* motif, int tailleMotif)
 
     if(ind == tailleMotif)
     {
-        affichageArbre(racineMotif->lv, motif);
+        affichage_arbre(racineMotif->lv, motif);
     }
 }
 
