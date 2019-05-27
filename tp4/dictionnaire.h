@@ -23,6 +23,7 @@ void            liberer_cell    (cell_t** prec);
 int             rech_cell       (cell_t* liste, char* mot, cell_t** trouve);
 cell_t**        init_table      ();
 void            ajouter_table   (cell_t** MAJ, char* mot, char* trad);
+int             recherche_table (cell_t** MAJ, char* mot, cell_t** trouve);
 void            debug_table     (cell_t** MAJ);
 void            liberer_table   (cell_t** MAJ);
 

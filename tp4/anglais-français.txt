@@ -1,0 +1,14 @@
+hello;bonjour
+happy;joyeux
+clement;clement
+sylvanus;sylvain
+thing;chose
+computer;ordinateur
+felix;le chat
+mathis;ours
+other;autre
+mouse;souris
+keyboard;clavier
+screen;ecran
+bottle;bouteille
+phone;telephone

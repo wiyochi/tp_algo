@@ -106,6 +106,11 @@ void ajouter_table(cell_t** MAJ, char* mot, char* trad)
     }
 }
 
+int recherche_table(cell_t** MAJ, char* mot, cell_t** trouve)
+{
+    return rech_cell(MAJ[hash_string(mot)], mot, trouve);
+}
+
 void debug_table(cell_t** MAJ)
 {
     int i;
