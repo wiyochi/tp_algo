@@ -165,16 +165,32 @@ void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
     }
 }
 
-void liberer_liste(noeud_t* t)
-{
-    noeud_t* cour = t;
-
-    //while(cour != NULL)
-}
-
 void liberer_arbre(noeud_t** racine)
 {
+    noeud_t*    cour        = *racine;
+    noeud_t*    suppr       = NULL;
+    Pile_t*     pile        = NULL;
 
+    if(!initPile(&pile, TAILLE_MAX))
+        exit(EXIT_FAILURE);
+
+    while ((!pileVide(pile)) ||  (cour != NULL))
+    {
+        if(!empiler(pile, cour))
+            printf("ERREUR EMPILER\n");
+        cour = cour->lv;
+
+        while((cour == NULL) && (!pileVide(pile)))
+        {
+            if(!depiler(pile, &cour))
+                printf("ERREUR DEPILER\n");
+            suppr = cour;
+            cour=cour->lh;
+            free(suppr);
+        }
+    }
+    libererPile(pile);
+    *racine = NULL;
 }
 
 void affichage_arbre(noeud_t* a, char* prefixe)
@@ -188,11 +204,11 @@ void affichage_arbre(noeud_t* a, char* prefixe)
     if(!initPile(&pile, TAILLE_MAX))
         exit(EXIT_FAILURE);
 
-    while ((!pileVide(pile)) ||  (cour!=NULL))
+    while ((!pileVide(pile)) ||  (cour != NULL))
     {
         if(!empiler(pile, cour))
             printf("ERREUR EMPILER\n");
-        cour=cour->lv;
+        cour = cour->lv;
 
         if(!sommet(pile, &car_sommet))
             printf("ERREUR SOMMET\n");
@@ -203,13 +219,14 @@ void affichage_arbre(noeud_t* a, char* prefixe)
             for(i = 0; i <= pile->rangSommet; i++)
                 printf("%c", tolower(motAffiche[i]->lettre));
             printf("\n");
+            free(motAffiche);
         }
 
         while((cour == NULL) && (!pileVide(pile)))
         {
             if(!depiler(pile, &cour))
                 printf("ERREUR DEPILER\n");
-            cour=cour->lh;
+            cour = cour->lh;
         }
     }
     libererPile(pile);

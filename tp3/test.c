@@ -26,5 +26,7 @@ int main()
     printf("\n");
     affichage_motif(arbre, "ar", 2);
 
+    liberer_arbre(&arbre);
+
     return 0;
 }

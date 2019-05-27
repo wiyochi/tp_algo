@@ -25,7 +25,6 @@ int         recherche       (noeud_t** racine, char* mot, int tailleMot, noeud_t
 void        ajouter_mot     (noeud_t** racine, char* mot, int tailleMot);
 void        affichage_arbre (noeud_t* a, char* prefixe);
 void        affichage_motif (noeud_t* racine, char* motif, int tailleMotif);
-void        liberer_liste   (noeud_t* t);
 void        liberer_arbre   (noeud_t** racine);
 void        debug_arbre     (noeud_t* racine);
 
