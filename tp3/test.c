@@ -16,7 +16,7 @@ int main()
     ajouter_mot(&arbre, "arbre", 5);
     ajouter_mot(&arbre, "abouti", 6);
 
-    debugArbre(arbre);
+    debug_arbre(arbre);
 
     affichage_arbre(arbre, "");
 

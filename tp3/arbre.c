@@ -165,6 +165,18 @@ void ajouter_mot(noeud_t** racine, char* mot, int tailleMot)
     }
 }
 
+void liberer_liste(noeud_t* t)
+{
+    noeud_t* cour = t;
+
+    //while(cour != NULL)
+}
+
+void liberer_arbre(noeud_t** racine)
+{
+
+}
+
 void affichage_arbre(noeud_t* a, char* prefixe)
 {
     noeud_t*    cour        = a;
@@ -216,7 +228,7 @@ void affichage_motif(noeud_t* racine, char* motif, int tailleMotif)
     }
 }
 
-void debugArbre(noeud_t* racine)
+void debug_arbre(noeud_t* racine)
 {
     noeud_t*    cour = racine;
     Pile_t*     pile = NULL;

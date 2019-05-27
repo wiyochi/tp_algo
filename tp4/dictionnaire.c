@@ -17,19 +17,25 @@ int creer_cell(cell_t** nouv, char* mot, char* trad)
     *nouv = (cell_t*)malloc(sizeof(cell_t));
     if(*nouv != NULL)
     {
-        (*nouv)->mot = (char*)malloc(sizeof(char) * (strlen(mot) + 1));
+        (*nouv)->mot = strdup(mot);
         if((*nouv)->mot != NULL)
         {
-            strcpy((*nouv)->mot, mot);
-
-            (*nouv)->trad = (char*)malloc(sizeof(char) * (strlen(trad) + 1));
+            (*nouv)->trad = strdup(trad);
             if((*nouv)->trad != NULL)
             {
-                strcpy((*nouv)->trad, trad);
+                (*nouv)->suivant = NULL;
                 ok = 1;
             }
+            else
+            {
+                free((*nouv)->mot);
+                free(*nouv);
+            }
         }
-        (*nouv)->suivant = NULL;
+        else
+        {
+            free(*nouv);
+        }
     }
     return ok;
 }
@@ -45,7 +51,6 @@ void liberer_cell(cell_t** prec)
     cell_t* suppr = (*prec);
     (*prec) = suppr->suivant;
     free(suppr->mot);
-    printf("trad: %s\n", suppr->trad);
     free(suppr->trad);
     free(suppr);
 }
@@ -80,7 +85,9 @@ void ajouter_table(cell_t** MAJ, char* mot, char* trad)
     {
         if(rech_cell(MAJ[hash], mot, &trouve))
         {
-            trouve->trad = trad;
+            if(trouve->trad != NULL)
+                free(trouve->trad);
+            trouve->trad = strdup(trad);
         }
         else
         {
