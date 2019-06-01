@@ -18,13 +18,26 @@ int main()
 
     debug_arbre(arbre);
 
+    printf("=== Arbre ===\n");
     affichage_arbre(arbre, "");
+    
+    printf("=== Motif vide ===\n");
+    affichage_motif(arbre, "", 0);
 
-    printf("\n");
+    printf("=== Motif a ===\n");
     affichage_motif(arbre, "a", 1);
 
-    printf("\n");
+    printf("=== Motif ar ===\n");
     affichage_motif(arbre, "ar", 2);
+    
+    printf("=== Motif ba ===\n");
+    affichage_motif(arbre, "ba", 2);
+    
+    printf("=== Motif test ===\n");
+    affichage_motif(arbre, "test", 4);
+    
+    printf("=== Motif tests ===\n");
+    affichage_motif(arbre, "testsss", 7);
 
     liberer_arbre(&arbre);
 
